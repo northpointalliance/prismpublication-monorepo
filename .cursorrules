@@ -1,0 +1,9 @@
+# .cursorrules - Context Optimization Protocol
+
+rules:
+  - Keep all source files under 150 lines of code.
+  - If a file exceeds 150 lines, modularize it into smaller sub-modules.
+  - Never rewrite entire files; return targeted diffs or specific functions.
+  - Do not create nested Git repositories or submodules.
+  - Store plain CSS modularly; avoid heavy inline frameworks.
+  - Use relative paths within subfolders under `/apps/` to maintain Cloudflare compatibility.

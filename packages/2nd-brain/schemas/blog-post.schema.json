@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prism://schemas/blog-post",
+  "title": "Blog post",
+  "description": "Structure for a post rendered into apps/main-site/blog/. Enforces question-based sections for AI search retrieval.",
+  "type": "object",
+  "required": ["title", "slug", "description", "updated_at", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "maxLength": 70 },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Output file becomes blog/<slug>.html."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 300,
+      "description": "Meta description. Answer the title question directly."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Refresh within three months or citation rates decay."
+    },
+    "source_log": {
+      "type": "string",
+      "description": "Filename in packages/2nd-brain/content/ this post was generated from."
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 5,
+      "description": "Each section stays between 120 and 180 words.",
+      "items": {
+        "type": "object",
+        "required": ["question", "answer", "detail", "tldr"],
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "type": "string",
+            "pattern": "\\?$",
+            "description": "Rendered as an H2. Must end in a question mark."
+          },
+          "answer": {
+            "type": "string",
+            "description": "Direct two to three sentence answer. Leads the section."
+          },
+          "detail": {
+            "type": "string",
+            "description": "Supporting data, examples, and context."
+          },
+          "tldr": { "type": "string", "maxLength": 200 },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["href", "label"],
+              "properties": {
+                "href": { "type": "string" },
+                "label": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

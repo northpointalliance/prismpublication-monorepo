@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prism://schemas/prompt-log",
+  "title": "Prompt log entry",
+  "description": "Front matter for a raw markdown prompt log in packages/2nd-brain/content/. One file per agent session.",
+  "type": "object",
+  "required": ["date", "project", "event", "event_type", "outcome"],
+  "additionalProperties": false,
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Session date, YYYY-MM-DD."
+    },
+    "project": {
+      "type": "string",
+      "enum": [
+        "prismpublication",
+        "convomargin",
+        "israelileads",
+        "devorahsart",
+        "daniels-corner",
+        "2nd-brain"
+      ]
+    },
+    "event": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "Short title for what the session did."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["Agent prompt", "Agent prompt + deploy", "Runtime test", "Docs", "Tooling", "Ops"]
+    },
+    "outcome": {
+      "type": "string",
+      "description": "What shipped or was learned. Include commit SHAs where relevant."
+    },
+    "prompt_excerpt": {
+      "type": "string",
+      "maxLength": 240,
+      "description": "First words of the operator prompt, verbatim. No secrets."
+    },
+    "estimated_cost_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Modeled LLM spend for the session, mid-tier rates."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Free-form tags. See TAG_RULES in the owner-brain builder."
+    },
+    "blog_slug": {
+      "type": "string",
+      "description": "Slug of the rendered post in apps/main-site/blog/, if this log became an article."
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimizing Transformer Attention &amp; Stopwords | Prism Publication</title>
+  <meta name="description" content="Whether stripping stopwords lowers transformer attention cost, why modern tokenizers punish naive trimming, and how to build a prompt budget that protects margin per conversation.">
+  <link rel="canonical" href="https://prismpublication.com/blog/token-optimization.html">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+  <header>
+    <h1>Optimizing Transformer Attention &amp; Stopwords</h1>
+    <p>Prompt and token log &middot; Updated August 20, 2026</p>
+  </header>
+
+  <main>
+    <section>
+      <p>Stopword stripping is the first optimization most teams reach for when an inference bill grows faster than revenue. It is also the one most likely to cost more than it saves. Attention cost scales with token count, but token count is not word count, and the words that look like filler are often the ones holding the grammar together.</p>
+      <p><a href="../index.html">Back to the project index</a></p>
+    </section>
+
+    <section>
+      <h2>Does removing stopwords reduce transformer attention cost?</h2>
+      <p>Yes, but far less than word counts suggest. Self-attention cost grows with the square of sequence length, so cutting tokens does compound, but stopwords are short and cheap while the tokens you keep are long and expensive.</p>
+      <p>Attention compares every token against every other token in the sequence. Drop 15 percent of the tokens and the attention matrix shrinks by roughly 28 percent, which sounds decisive. In practice, provider billing is linear in tokens rather than quadratic in attention, so your invoice falls by the 15 percent, not the 28. Meanwhile the model loses the function words that mark negation, tense, and possession. A support prompt trimmed from "the customer did not receive the refund" to "customer receive refund" inverts the meaning while saving three cheap tokens.</p>
+      <p><strong>TLDR:</strong> Attention gets cheaper quadratically, your bill only falls linearly, and function words carry meaning that costs almost nothing to keep.</p>
+      <p>Related: <a href="https://convomargin.pages.dev" target="_blank">model the change in the estimator</a></p>
+    </section>
+
+    <section>
+      <h2>Why do modern tokenizers punish naive stopword stripping?</h2>
+      <p>Byte-pair encoding already compresses common words into single tokens, so stopwords are the cheapest text in your prompt. Removing them raises the average cost per remaining token while leaving fewer tokens to amortize the fixed overhead of the call.</p>
+      <p>In a typical BPE vocabulary, "the", "of", "and", and "to" each map to one token, often with a leading space folded in. Rare domain nouns fragment into three or four. When you strip the one-token words you have deleted the most efficient part of the sequence and kept the least efficient. Worse, stripping breaks the byte pairs the tokenizer expects, so "notreceived" can tokenize to more pieces than "not received" did. Measure tokens with the provider's own tokenizer before and after, never words.</p>
+      <p><strong>TLDR:</strong> Stopwords are single tokens; domain terms are not. Cutting the cheap tokens can raise total token count.</p>
+      <p>Related: <a href="#budget">prompt budget section</a></p>
+    </section>
+
+    <section>
+      <h2>How much does prompt trimming actually save per month?</h2>
+      <p>Run the arithmetic on your own traffic before committing engineering time. At mid-tier rates, a system prompt of 1,200 tokens sent across 50,000 conversations per month costs roughly 180 dollars, and a 20 percent trim returns about 36 dollars.</p>
+      <p>That number decides whether the work is worth doing. If 36 dollars a month is material, the problem is volume, not phrasing, and caching or a smaller model is the real lever. If you serve five million conversations, the same 20 percent becomes 3,600 dollars and deserves a dedicated owner. The trap is spending two engineering days on a saving that a single cached system prompt would have delivered for free. Price the fix against the bill it addresses, then check whether the same effort applied to output tokens returns more, since output is typically billed at three to five times input.</p>
+      <p><strong>TLDR:</strong> Compute the monthly dollar saving first. Below a few hundred dollars, caching beats rewriting.</p>
+      <p>Related: <a href="https://convomargin.pages.dev" target="_blank">Convo Margin estimator</a></p>
+    </section>
+
+    <section>
+      <h2>Which compression techniques hold up in production?</h2>
+      <p>Structural cuts outperform lexical ones every time. Removing an unused retrieval passage, a stale few-shot example, or a duplicated instruction saves more tokens than any word-level rewrite, and it cannot corrupt meaning.</p>
+      <p>The reliable ordering is roughly this. First, delete context nobody reads: verbose tool output, repeated schema definitions, examples that predate the current prompt. Second, cap retrieval at the number of passages that measurably changes answers, which is usually three, not ten. Third, cache the static system prompt so you pay for it once per window rather than once per turn. Fourth, summarize long conversation history instead of replaying it. Only after all of that does phrasing matter, and by then the remaining win is small enough to skip.</p>
+      <p><strong>TLDR:</strong> Cut whole blocks before cutting words. Unread context is the largest and safest saving.</p>
+      <p>Related: <a href="../index.html">project index</a></p>
+    </section>
+
+    <section>
+      <h2>How do you measure wasted context without model internals?</h2>
+      <p>You do not need attention weights to find waste. Ablate a block, rerun a fixed evaluation set, and compare answer quality. If removing a passage does not move your score, that passage was pure cost.</p>
+      <p>Build a frozen set of 50 to 200 real prompts with known good answers, then run a leave-one-out pass across each structural block in the prompt: system instructions, each retrieved passage, each few-shot example, each history window length. Record tokens and score for every variant. The output is a table of blocks ranked by tokens spent per point of quality. Most teams discover two or three blocks that cost thousands of tokens and buy nothing, usually added during an incident and never removed afterward.</p>
+      <p><strong>TLDR:</strong> Leave-one-out ablation against a frozen eval set finds dead context without touching model internals.</p>
+      <p>Related: <a href="#budget">prompt budget</a></p>
+    </section>
+
+    <section id="budget">
+      <h2>What belongs in a prompt budget?</h2>
+      <p>A prompt budget is a hard token ceiling per request, split across named blocks, with an owner for each. It converts a vague cost concern into a number the code can enforce and CI can test.</p>
+      <p>A workable budget for a support assistant might allocate 400 tokens to system instructions, 900 to retrieval, 600 to conversation history, and 300 to the user turn, for a 2,200 token input ceiling and a 400 token output cap. Assert the ceiling in tests so a new feature cannot silently add 800 tokens to every call. When a team needs more room, they trade against another block rather than growing the total. This is the same discipline as a performance budget for page weight, applied to context instead of kilobytes.</p>
+      <p><strong>TLDR:</strong> Give every prompt block a token allocation and an owner, then enforce the ceiling in CI.</p>
+      <p>Related: <a href="https://convomargin.pages.dev" target="_blank">model a budget change</a></p>
+    </section>
+
+    <section>
+      <h2>How does context waste change margin per conversation?</h2>
+      <p>Margin per conversation is revenue per conversation minus inference cost per conversation. Context waste attacks the second term on every single turn, which is why it compounds faster than most teams expect from a per-call number that looks trivial.</p>
+      <p>A wasted 500 tokens reads as a rounding error at one call. Across a chatty free tier at forty turns per user per month it becomes the difference between a product that funds itself and one that leaks. This is the structural problem with engagement in conversational apps: your most active free users are your most expensive, so cost scales with the exact metric you are trying to grow. Tracking token spend alone will not tell you which conversations paid for themselves. You need the join between usage and revenue, per conversation, before you can call any optimization a win.</p>
+      <p><strong>TLDR:</strong> Wasted context multiplies by turn count, so small per-call savings decide free-tier viability.</p>
+      <p>Related: <a href="https://convomargin.pages.dev" target="_blank">Convo Margin</a> &middot; <a href="../index.html">project index</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Prism Publication. All rights reserved.</p>
+  </footer>
+</body>
+</html>
