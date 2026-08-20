@@ -1,0 +1,59 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "prism-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  // nodejs_compat is required by postgres.js and by Better Auth's crypto paths.
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // Replace the placeholder id with the output of:
+  //   wrangler hyperdrive create prism-neon --connection-string="postgresql://...neon.tech/neondb?sslmode=require"
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "REPLACE_WITH_HYPERDRIVE_ID"
+    }
+  ],
+
+  "r2_buckets": [
+    { "binding": "BLOG_IMAGES", "bucket_name": "prism-blog-images" },
+    { "binding": "AD_IMAGES", "bucket_name": "prism-ad-images" }
+  ],
+
+  // Producers write; the consumer below replaces the pgmq + pg_cron drain entirely.
+  "queues": {
+    "producers": [
+      { "binding": "WEBHOOK_QUEUE", "queue": "prism-webhook-processing" },
+      { "binding": "PAYOUT_QUEUE", "queue": "prism-payout-processing" }
+    ],
+    "consumers": [
+      {
+        "queue": "prism-webhook-processing",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 3,
+        "dead_letter_queue": "prism-webhook-dlq"
+      },
+      {
+        "queue": "prism-payout-processing",
+        "max_batch_size": 5,
+        "max_batch_timeout": 10,
+        "max_retries": 3,
+        "dead_letter_queue": "prism-payout-dlq"
+      }
+    ]
+  },
+
+  "vars": {
+    "API_CORS_ORIGIN": "https://prismpublication.com,https://www.prismpublication.com",
+    "REQUIRE_SDK_HMAC": "true"
+  },
+
+  "routes": [
+    { "pattern": "api.prismpublication.com", "custom_domain": true }
+  ]
+
+  // Secrets are NOT listed here. Set each with `wrangler secret put <NAME>`.
+  // See .dev.vars.example for the required names.
+}

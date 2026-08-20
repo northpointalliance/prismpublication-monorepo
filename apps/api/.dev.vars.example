@@ -1,0 +1,25 @@
+# Local dev only. Copy to .dev.vars, which is gitignored.
+# In production set each of these with: wrangler secret put <NAME>
+# Never commit real values. Rotate anything that previously lived in git history.
+
+# Neon Postgres. Production reads the Hyperdrive binding instead of this.
+DATABASE_URL=""
+
+# Better Auth. Generate with: openssl rand -hex 32
+BETTER_AUTH_SECRET=""
+BETTER_AUTH_URL="http://localhost:8787"
+
+# Platform keys. Rotate both during the migration.
+ADMIN_API_KEY=""
+PRISM_API_KEY=""
+
+# Transactional email (Resend). Replaces the broken Supabase Auth SMTP path.
+RESEND_API_KEY=""
+EMAIL_FROM="Prism Publication <noreply@prismpublication.com>"
+
+# Optional model providers
+OPENAI_API_KEY=""
+LOVABLE_API_KEY=""
+
+# PayPal webhook verification. Live client id and secret stay in platform_settings.
+PAYPAL_WEBHOOK_ID=""
