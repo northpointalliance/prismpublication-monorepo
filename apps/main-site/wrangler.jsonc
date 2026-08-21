@@ -1,0 +1,10 @@
+{
+  "name": "prismpublication",
+  "compatibility_date": "2026-08-21",
+  "workers_dev": false,
+  "assets": { "directory": "." },
+  "routes": [
+    { "pattern": "prismpublication.com/*", "zone_name": "prismpublication.com" },
+    { "pattern": "www.prismpublication.com/*", "zone_name": "prismpublication.com" }
+  ]
+}
