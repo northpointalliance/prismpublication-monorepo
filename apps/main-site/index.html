@@ -3,51 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prism Publication | AI Engineering & Strategy</title>
+  <title>Prism Publication | Native Ads for LLM Interfaces</title>
+  <meta name="description" content="Monetize AI chatbot sessions with contextual, intent-matched offers. Tools for token margin, U.S. Federal grants, and low-code builds.">
+  <link rel="canonical" href="https://prismpublication.com/">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/hub.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebSite","name":"Prism Publication","url":"https://prismpublication.com/"},
+    {"@type":"Organization","name":"Prism Publication","url":"https://prismpublication.com/"},
+    {"@type":"ItemList","name":"Prism Publication ecosystem","itemListElement":[
+      {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Convomargin","url":"https://convomargin.pages.dev","description":"Track prompt usage, API costs, and token leakage in real time to protect LLM app profitability."}},
+      {"@type":"ListItem","position":2,"item":{"@type":"WebSite","name":"Israeli Leads","url":"https://israelileads.com","description":"Plain-English execution for Israeli founders securing U.S. Federal non-dilutive grants (like SBIR) and Federal/State tax compliance."}},
+      {"@type":"ListItem","position":3,"item":{"@type":"WebSite","name":"Devorah's Art","url":"https://danielrosenthal.org","description":"A real-world case study on rebuilding a high-performance visual portfolio using Cloudflare Pages, Cursor, and modern AI workflows."}}
+    ]}
+  ]}
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header>
+    <p class="eyebrow">Flagship Ad-Tech Engine</p>
     <h1>Prism Publication</h1>
-    <p>Contextual AI Frameworks & Token Economics</p>
+    <p>Native, Session-Aware Ad Tech for LLM Interfaces</p>
+    <div class="solution">
+      <p><strong>Core Solution:</strong> Monetize AI chatbot sessions directly with contextual, intent-matched offers instead of invasive, low-signal display banners.</p>
+    </div>
+    <p class="hero-cta"><a class="btn" href="#sdk-preview">Preview SDK Integration &rarr;</a></p>
   </header>
 
-  <main>
-    <!-- Featured Strategic Assets -->
-    <section class="directory">
-      <h2>Project Index</h2>
-      
-      <article class="card">
-        <h3>Israeli Leads</h3>
-        <p>B2B Market Intelligence & Startup GTM Advisory.</p>
-        <a href="https://israelileads.com" target="_blank">Book Strategy Call &rarr;</a>
-      </article>
-
-      <article class="card">
-        <h3>Convo Margin</h3>
-        <p>Multi-model LLM prompt tracking & cost estimator.</p>
-        <a href="https://convomargin.pages.dev" target="_blank">Try Estimator &rarr;</a>
-      </article>
-
-      <article class="card">
-        <h3>Devorah's Art</h3>
-        <p>Original fine art portfolio and direct print collection.</p>
-        <a href="https://devorahsart.com" target="_blank">View Collection &rarr;</a>
-      </article>
+  <main id="main">
+    <section>
+      <h2>What sits in the operator ecosystem?</h2>
+      <p class="lede">Adjacent tools, grant execution engines, and non-developer build studies powered by the same framework. Each property below is a live site, not a mockup.</p>
+      <div class="directory">
+        <article class="card" id="convomargin">
+          <h3>Convomargin</h3>
+          <p class="tagline">Unit Economics &amp; Token Margin Optimization</p>
+          <p>Track prompt usage, API costs, and token leakage in real time to protect LLM app profitability.</p>
+          <a class="btn-card" href="https://convomargin.pages.dev" rel="noopener">Try Margin Calculator &rarr;</a>
+          <div class="deep-context">
+            <h2>How do you audit variable API spend for AI apps?</h2>
+            <p>Building on OpenAI, Anthropic, or open-source models introduces unpredictable token usage. Convomargin audits prompt structures and calculates gross margins per user session.</p>
+          </div>
+        </article>
+        <article class="card" id="israeli-leads">
+          <h3>Israeli Leads</h3>
+          <p class="tagline">U.S. Federal &amp; State Grant Advisory</p>
+          <p>Plain-English execution for Israeli founders securing U.S. Federal non-dilutive grants (like SBIR) and Federal/State tax compliance.</p>
+          <a class="btn-card" href="https://israelileads.com" rel="noopener">Explore U.S. Grants &rarr;</a>
+          <div class="deep-context">
+            <h2>How do Israeli founders handle U.S. grant compliance?</h2>
+            <p>Israeli tech startups expanding to the U.S. must navigate strict Federal regulations, Schedule C filings, and Form 8858 rules without getting bogged down in legal jargon.</p>
+          </div>
+        </article>
+        <article class="card" id="devorahs-art">
+          <h3>Devorah's Art</h3>
+          <p class="tagline">The Non-Developer Build Story</p>
+          <p>A real-world case study on rebuilding a high-performance visual portfolio using Cloudflare Pages, Cursor, and modern AI workflows.</p>
+          <a class="btn-card" href="https://danielrosenthal.org" rel="noopener">View Portfolio Case Study &rarr;</a>
+          <div class="deep-context">
+            <h2>What does a modern low-code web architecture look like?</h2>
+            <p>Demonstrating practical low-code engineering: deploying static assets on Cloudflare Pages, maintaining fast load speeds, and managing structured content via LLMs without traditional code clutter.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- 2nd Brain Blog Stream -->
+    <section id="sdk-preview">
+      <h2>How does the SDK integration work?</h2>
+      <p>Three lines in your chat handler. You pass the session context, you get back a labelled offer or nothing at all. No client-side script, no cookies, and your API key stays server side.</p>
+      <pre><code>import { getAd } from "@prismpublication/sdk";
+
+const offer = await getAd({
+  apiKey: process.env.PRISM_API_KEY,
+  format: "card",
+  context: { topic: userMessage },
+});</code></pre>
+      <p>Returns <code>null</code> when nothing relevant matches, so a quiet session stays quiet.</p>
+    </section>
+
     <section class="blog-feed">
-      <h2>Latest Prompt & Token Logs</h2>
+      <h2>Latest Prompt &amp; Token Logs</h2>
       <ul>
-        <li><a href="blog/token-optimization.html">Optimizing Transformer Attention & Stopwords</a></li>
+        <li><a href="blog/token-optimization.html">Optimizing Transformer Attention &amp; Stopwords</a></li>
       </ul>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 Prism Publication. All rights reserved.</p>
+    <p>Native, session-aware ad tech for LLM interfaces.</p>
+    <nav>
+      <a href="https://israelileads.com">Grants</a>
+      <a href="#sdk-preview">FAQ</a>
+      <a href="#sdk-preview">Preview SDK</a>
+      <a href="blog/">Logs</a>
+    </nav>
+    <p>&copy; 2026 Prism Publication.</p>
+    <p class="disclaimer">Grant eligibility and tax outcomes depend on your facts. This site is information, not legal or tax advice.</p>
   </footer>
 </body>
 </html>

@@ -1,0 +1,98 @@
+/* hub.css - hero, CTAs, deep-context cards. Max 100 lines. */
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.5rem;
+  z-index: 10;
+  background: #0369a1;
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+}
+
+.skip-link:focus { top: 0.75rem; }
+.eyebrow {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.solution {
+  max-width: 40rem;
+  margin: 1.5rem auto 0;
+  background: #e0f2fe;
+  border-left: 4px solid #0369a1;
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.15rem;
+  text-align: left;
+}
+
+.solution p { margin: 0; color: #1e293b; font-size: 0.95rem; }
+.hero-cta { margin-top: 1.75rem; }
+.lede { max-width: 40rem; }
+.btn {
+  display: inline-block;
+  background: #0369a1;
+  color: #fff;
+  padding: 0.75rem 1.4rem;
+  border-radius: 8px;
+}
+
+.btn:hover { background: #0284c7; color: #fff; text-decoration: none; }
+.card .tagline {
+  color: #0369a1;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.btn-card {
+  display: block;
+  text-align: center;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.btn-card:hover { background: #bae6fd; text-decoration: none; }
+.deep-context { border-top: 1px solid var(--line); padding-top: 0.85rem; }
+.deep-context h2 { font-size: 0.8rem; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.deep-context p { font-size: 0.9rem; margin: 0; }
+#sdk-preview {
+  background: #e0f2fe;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+}
+
+#sdk-preview pre {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.88rem;
+}
+
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+
+footer .disclaimer { max-width: 40rem; margin: 0.5rem auto 0; font-size: 0.8rem; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card, .card:hover { transform: none; transition: none; }
+}

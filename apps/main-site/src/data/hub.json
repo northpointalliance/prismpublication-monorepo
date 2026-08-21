@@ -1,0 +1,47 @@
+{
+  "mainHero": {
+    "title": "Prism Publication",
+    "subtitle": "Native, Session-Aware Ad Tech for LLM Interfaces",
+    "fastSolution": "Monetize AI chatbot sessions directly with contextual, intent-matched offers instead of invasive, low-signal display banners.",
+    "ctaText": "Preview SDK Integration",
+    "ctaLink": "#sdk-preview"
+  },
+  "ecosystemProperties": [
+    {
+      "id": "convomargin",
+      "title": "Convomargin",
+      "tagline": "Unit Economics & Token Margin Optimization",
+      "fastSolution": "Track prompt usage, API costs, and token leakage in real time to protect LLM app profitability.",
+      "ctaText": "Try Margin Calculator",
+      "ctaLink": "https://convomargin.pages.dev",
+      "deepContext": {
+        "h2": "Auditing Variable API Spend for AI Apps",
+        "body": "Building on OpenAI, Anthropic, or open-source models introduces unpredictable token usage. Convomargin audits prompt structures and calculates gross margins per user session."
+      }
+    },
+    {
+      "id": "israeli-leads",
+      "title": "Israeli Leads",
+      "tagline": "U.S. Federal & State Grant Advisory",
+      "fastSolution": "Plain-English execution for Israeli founders securing U.S. Federal non-dilutive grants (like SBIR) and Federal/State tax compliance.",
+      "ctaText": "Explore U.S. Grants",
+      "ctaLink": "https://israelileads.com",
+      "deepContext": {
+        "h2": "Cross-Border Grant Compliance for Founders",
+        "body": "Israeli tech startups expanding to the U.S. must navigate strict Federal regulations, Schedule C filings, and Form 8858 rules without getting bogged down in legal jargon."
+      }
+    },
+    {
+      "id": "devorahs-art",
+      "title": "Devorah's Art",
+      "tagline": "The Non-Developer Build Story",
+      "fastSolution": "A real-world case study on rebuilding a high-performance visual portfolio using Cloudflare Pages, Cursor, and modern AI workflows.",
+      "ctaText": "View Portfolio Case Study",
+      "ctaLink": "https://danielrosenthal.org",
+      "deepContext": {
+        "h2": "Modern Low-Code Web Architecture",
+        "body": "Demonstrating practical low-code engineering: deploying static assets on Cloudflare Pages, maintaining fast load speeds, and managing structured content via LLMs without traditional code clutter."
+      }
+    }
+  ]
+}

@@ -7,7 +7,7 @@
   --teal: #2dd4bf;
   --peach: #fdba74;
   --bg: #ffffff;
-  --bg-soft: #f8fafc;
+  --bg-soft: #e0f2fe;
   --ink: #0f172a;
   --ink-soft: #475569;
   --line: #e2e8f0;
@@ -30,7 +30,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: #f0f9ff;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
