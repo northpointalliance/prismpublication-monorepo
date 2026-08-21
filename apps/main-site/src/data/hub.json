@@ -37,7 +37,7 @@
       "tagline": "The Non-Developer Build Story",
       "fastSolution": "A real-world case study on rebuilding a high-performance visual portfolio using Cloudflare Pages, Cursor, and modern AI workflows.",
       "ctaText": "View Portfolio Case Study",
-      "ctaLink": "https://danielrosenthal.org",
+      "ctaLink": "https://devorahsart.com",
       "deepContext": {
         "h2": "Modern Low-Code Web Architecture",
         "body": "Demonstrating practical low-code engineering: deploying static assets on Cloudflare Pages, maintaining fast load speeds, and managing structured content via LLMs without traditional code clutter."
