@@ -1,0 +1,111 @@
+{
+  "_comment": "Topic umbrellas with platform policy. Extends the probability-umbrella method from daniels_corner/public/data/prompt-umbrella.json: name the umbrella before drafting so the model pulls from one word cluster. linkedinPolicy exists because reach and honesty are in tension on that platform, and the author wants both.",
+  "version": 1,
+  "updatedAt": "2026-08-20",
+
+  "riskTiers": {
+    "core": "Publish freely. On-mission, builds the trust that produces revenue.",
+    "adjacent": "Publish regularly. Earns attention and shows a person behind the account.",
+    "personal": "Publish selectively. Deepens trust with the right readers, narrows the room.",
+    "constrained": "Publish rarely and carefully. True and worth saying, but the platform taxes it.",
+    "observation-only": "Do not argue the politics. Report the pattern if it is load-bearing for a business point, or leave it out."
+  },
+
+  "umbrellas": [
+    {
+      "id": "llm-reality",
+      "label": "What LLMs actually do, and where the confidence is fake",
+      "tier": "core",
+      "proven": true,
+      "evidence": "The homophone and Hebrew tokenization exchange is the author's sharpest existing material.",
+      "coreChunks": ["probability", "token", "attention", "embedding", "temperature", "RAG", "guardrail", "hallucination", "non-deterministic", "human in the loop"],
+      "edgeChunks": ["shoresh", "abjad", "nikud", "low-resource language", "logits"],
+      "angle": "Technical honesty as a differentiator. Explain the mechanism, then name what it cannot do.",
+      "linkedinPolicy": "Highest-value topic. Post freely. Lead with a concrete mechanism, not a hot take."
+    },
+    {
+      "id": "trust-gtm",
+      "label": "Go-to-market without cold calling",
+      "tier": "core",
+      "coreChunks": ["ICP", "pipeline", "buyer-led", "trust", "referral", "warm intro", "content as proof", "margin per conversation"],
+      "edgeChunks": ["cold call", "sequence", "spray and pray", "outbound cadence"],
+      "angle": "Cold outreach is a probability engine applied to humans. Same critique as LLM overconfidence, different domain. That link is the author's own and nobody else is making it.",
+      "linkedinPolicy": "Core. The audience is B2B founders and sellers. Argue from the author's own failed and successful attempts, with numbers."
+    },
+    {
+      "id": "prompting-method",
+      "label": "Probability umbrella prompting",
+      "tier": "core",
+      "coreChunks": ["umbrella", "word cluster", "core chunk", "edge case chunk", "static context", "voice profile", "one umbrella per project"],
+      "angle": "A named, teachable method the author invented. Most durable IP in the corpus.",
+      "linkedinPolicy": "Core. Teach the method with a worked example each time, never as an abstract framework."
+    },
+    {
+      "id": "nfl-draft",
+      "label": "NFL first-round drafting and how hard it is to draft well",
+      "tier": "adjacent",
+      "proven": true,
+      "evidence": "Highest-viewed cluster across roughly 400 videos.",
+      "coreChunks": ["pick number", "board", "team fit", "trade down", "BPA", "need vs value", "first round", "war room"],
+      "edgeChunks": ["compensatory pick", "medical red flag"],
+      "angle": "Draft boards are pipeline reviews. Rank options, stress-test fit, call the move. The structural analogy to ICP research is the bridge to the business audience.",
+      "linkedinPolicy": "Post during draft season and playoffs. Always land the structural analogy so it earns its place on a business feed. NFL is the most-watched content in the US, which is the reach argument."
+    },
+    {
+      "id": "global-sport",
+      "label": "Soccer is bigger, and what that says about attention",
+      "tier": "adjacent",
+      "coreChunks": ["football", "futbol", "global audience", "World Cup", "attention", "shared ritual", "market size"],
+      "angle": "The American default assumes the NFL is the ceiling. Soccer is the counterexample and a useful lesson about mistaking your market for the market.",
+      "linkedinPolicy": "Good for reaching a non-US audience. Pair with a market-sizing point."
+    },
+    {
+      "id": "science-plainly",
+      "label": "Science, stated plainly, including the uncertainty",
+      "tier": "adjacent",
+      "coreChunks": ["evidence", "sample size", "replication", "cosmology", "mechanism", "we do not know yet"],
+      "angle": "Same discipline as the LLM writing: explain the mechanism, then mark the limit of the data.",
+      "linkedinPolicy": "Works when tied to a decision the reader has to make. Avoid pure explainer with no stake."
+    },
+    {
+      "id": "text-and-faith",
+      "label": "Sacred text beside secular analysis",
+      "tier": "personal",
+      "coreChunks": ["Torah", "Mishnah", "Tanya", "Maimonides", "close reading", "commentary", "argument across generations", "Shabbat"],
+      "angle": "Talmudic method is adversarial close reading, which is exactly the habit the author applies to AI claims. The lineage is real, not decoration.",
+      "linkedinPolicy": "Selective. Land it as method or as honest personal detail, never as instruction to the reader. This is where a 53-year-old voice cannot be faked, which is the whole point."
+    },
+    {
+      "id": "israel-life",
+      "label": "Building from Israel",
+      "tier": "personal",
+      "coreChunks": ["Israel", "olim", "time zone", "small market", "dual office", "US footprint", "wandering"],
+      "angle": "The dreamer and wanderer thread. Geography as a real constraint on a small software business.",
+      "linkedinPolicy": "Selective and concrete. Logistics and market reality travel well; national argument does not."
+    },
+    {
+      "id": "corruption",
+      "label": "Corruption, and why naming it matters",
+      "tier": "constrained",
+      "coreChunks": ["accountability", "institution", "incentive", "capture", "transparency", "public trust"],
+      "angle": "Institutional incentives, not personalities. The systems critique the author already applies to enterprise IT governance scales up cleanly.",
+      "linkedinPolicy": "Rare. Roughly one post a quarter. Argue structure and incentive, never a named figure or a party. Keep the sharper version for the owned blog, where there is no algorithm to appease."
+    },
+    {
+      "id": "israeli-politics-observation",
+      "label": "Why many Israelis still back Trump",
+      "tier": "observation-only",
+      "angle": "An audience observation the author has made, not a position he is advancing. Useful only as market context, for instance when explaining why a message lands differently in Tel Aviv than in Boston.",
+      "linkedinPolicy": "Do not post as political content. The engine must not generate advocacy here. If it surfaces at all, it is one clause of audience context inside a go-to-market point, and the author approves it by hand."
+    }
+  ],
+
+  "mixTarget": {
+    "_comment": "Rough publishing balance per month, so the feed reads like a person and not a content calendar.",
+    "core": 6,
+    "adjacent": 3,
+    "personal": 2,
+    "constrained": 0.33,
+    "observation-only": 0
+  }
+}

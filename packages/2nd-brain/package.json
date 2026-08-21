@@ -1,0 +1,13 @@
+{
+  "name": "@prism/2nd-brain",
+  "private": true,
+  "type": "module",
+  "description": "Content corpus, schemas, and extraction scripts. No runtime, no deployment target.",
+  "scripts": {
+    "export:blog": "node scripts/export-blog-posts.mjs",
+    "render:post": "node scripts/render-post.mjs"
+  },
+  "dependencies": {
+    "postgres": "^3.4.5"
+  }
+}

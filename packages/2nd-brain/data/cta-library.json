@@ -1,0 +1,45 @@
+{
+  "$comment": "Hardcoded offers. The generator selects an id, it never writes CTA copy. Edit here once and every post updates on the next render. Verify button_link paths against the live israelileads.com routes before publishing.",
+  "default": "cross-border-advisory",
+  "offers": [
+    {
+      "id": "grant-eligibility-audit",
+      "name": "US Grant Eligibility Audit",
+      "headline": "Find out which US Federal grants you actually qualify for",
+      "body": "Most Israeli founders assume Small Business Innovation Research (SBIR) money is closed to them, then discover the ownership and place-of-performance rules a year too late. We check your structure against the real eligibility criteria and tell you which programs are open and which are not.",
+      "button_text": "Request an eligibility audit",
+      "button_link": "https://israelileads.com/grant-eligibility-audit",
+      "friction_reducer": "Written findings in 3 business days. No call required.",
+      "match": {
+        "keywords": ["grant", "sbir", "sttr", "nsf", "non-dilutive", "funding", "award", "eligibility", "subsidy", "research funding"],
+        "intent": "The founder is asking whether they can access Federal or State funding."
+      }
+    },
+    {
+      "id": "founder-tax-setup",
+      "name": "Schedule C / 8858 Founder Setup",
+      "headline": "Get your US filing structure right before the first deadline",
+      "body": "An Israeli founder with US activity can end up owing Schedule C reporting, Form 8858 for a foreign disregarded entity, or both, and the penalties are assessed per form per year. We map which filings your actual structure triggers and when each one is due.",
+      "button_text": "Map my filing obligations",
+      "button_link": "https://israelileads.com/founder-tax-setup",
+      "friction_reducer": "Send your structure by email, get a written filing map back.",
+      "match": {
+        "keywords": ["tax", "schedule c", "8858", "ein", "itin", "filing", "irs", "entity", "llc", "c-corp", "delaware", "incorporation", "disregarded", "withholding", "treaty"],
+        "intent": "The founder is asking about entity structure, tax filings, or registration."
+      }
+    },
+    {
+      "id": "cross-border-advisory",
+      "name": "Cross-Border Advisory Call",
+      "headline": "Talk through your US market entry with someone who has done it from here",
+      "body": "Fifteen years of business-to-business go-to-market from Israel, including the parts that do not survive the flight to New York. We work through your sequencing, your first hires, and what to stop doing.",
+      "button_text": "Start with a written brief",
+      "button_link": "https://israelileads.com/advisory",
+      "friction_reducer": "Send the brief first. We only book a call if it is genuinely useful.",
+      "match": {
+        "keywords": ["go-to-market", "gtm", "sales", "pipeline", "hiring", "first customer", "market entry", "expansion", "positioning", "pricing", "outbound", "bdr", "sdr", "channel"],
+        "intent": "The founder is asking about commercial strategy rather than compliance."
+      }
+    }
+  ]
+}

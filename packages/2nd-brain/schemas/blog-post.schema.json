@@ -1,68 +1,134 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "prism://schemas/blog-post",
-  "title": "Blog post",
-  "description": "Structure for a post rendered into apps/main-site/blog/. Enforces question-based sections for AI search retrieval.",
+  "title": "Blog post, front-loaded modular engine",
+  "description": "Three mandatory layers for Israeli founders entering the US market. Layer 1 (executive_summary + primary_cta) serves the reader who bounces in 30 seconds. Layer 2 (decision_matrix) is the scannable break. Layer 3 (deep_context_body) is the citation fuel. There is deliberately NO intro field and additionalProperties is false everywhere, which is what stops a model defaulting to preamble.",
   "type": "object",
-  "required": ["title", "slug", "description", "updated_at", "sections"],
+  "required": ["title", "slug", "meta_description", "updated_at", "executive_summary", "cta_id", "decision_matrix", "deep_context_body", "faq_schema_items"],
   "additionalProperties": false,
   "properties": {
-    "title": { "type": "string", "maxLength": 70 },
-    "slug": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-      "description": "Output file becomes blog/<slug>.html."
+    "title": { "$ref": "#/$defs/question", "maxLength": 70, "description": "Direct, question-based H1." },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "meta_description": { "$ref": "#/$defs/clean", "minLength": 80, "maxLength": 155 },
+    "updated_at": { "type": "string", "format": "date", "description": "Refresh inside three months or citation rates decay." },
+    "source_log": { "type": "string", "description": "Seed file this was generated from." },
+
+    "executive_summary": {
+      "type": "object",
+      "required": ["direct_answer", "key_takeaways"],
+      "additionalProperties": false,
+      "properties": {
+        "direct_answer": {
+          "$ref": "#/$defs/clean",
+          "minLength": 240,
+          "maxLength": 420,
+          "description": "40 to 60 words answering the core problem. The solution must land in the first two sentences. No background, no history, no 'In today's landscape'."
+        },
+        "key_takeaways": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/clean", "minLength": 30, "maxLength": 170 }
+        }
+      }
     },
-    "description": {
-      "type": "string",
-      "maxLength": 300,
-      "description": "Meta description. Answer the title question directly."
+
+    "cta_id": {
+      "enum": ["grant-eligibility-audit", "founder-tax-setup", "cross-border-advisory"],
+      "description": "Selects a pre-built offer from packages/2nd-brain/data/cta-library.json. The model emits the id only and never writes CTA copy. This removes a hallucination surface, cuts output tokens, and means editing the offer once updates every post on the next render."
     },
-    "updated_at": {
-      "type": "string",
-      "format": "date",
-      "description": "Refresh within three months or citation rates decay."
+
+    "decision_matrix": {
+      "type": "object",
+      "description": "LAYER 2. Plain English breakdown of costs, timelines, or requirements. Table or bullets, not both.",
+      "required": ["heading"],
+      "additionalProperties": false,
+      "oneOf": [{ "required": ["table"] }, { "required": ["bullets"] }],
+      "properties": {
+        "heading": { "$ref": "#/$defs/clean", "maxLength": 80 },
+        "table": {
+          "type": "object",
+          "required": ["columns", "rows"],
+          "additionalProperties": false,
+          "properties": {
+            "columns": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "$ref": "#/$defs/clean", "maxLength": 40 } },
+            "rows": { "type": "array", "minItems": 3, "items": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "$ref": "#/$defs/clean", "maxLength": 120 } } }
+          }
+        },
+        "bullets": { "type": "array", "minItems": 3, "maxItems": 8, "items": { "$ref": "#/$defs/clean", "minLength": 15, "maxLength": 160 } }
+      }
     },
-    "source_log": {
-      "type": "string",
-      "description": "Filename in packages/2nd-brain/content/ this post was generated from."
-    },
-    "sections": {
+
+    "deep_context_body": {
       "type": "array",
-      "minItems": 5,
-      "description": "Each section stays between 120 and 180 words.",
+      "description": "LAYER 3. 800+ words minimum, 2,900+ for a pillar. Six sections at 130 to 180 words clears 800; a pillar needs roughly 16 to 20.",
+      "minItems": 6,
       "items": {
         "type": "object",
-        "required": ["question", "answer", "detail", "tldr"],
+        "required": ["section_h2", "content", "tldr", "authorities"],
         "additionalProperties": false,
         "properties": {
-          "question": {
-            "type": "string",
-            "pattern": "\\?$",
-            "description": "Rendered as an H2. Must end in a question mark."
+          "section_h2": { "$ref": "#/$defs/question" },
+          "content": {
+            "$ref": "#/$defs/clean",
+            "minLength": 700,
+            "maxLength": 1600,
+            "description": "Markdown. Open with a direct two to three sentence answer to the H2, then the Federal and State regulatory specifics. Roughly 130 to 180 words. No wind-up."
           },
-          "answer": {
-            "type": "string",
-            "description": "Direct two to three sentence answer. Leads the section."
-          },
-          "detail": {
-            "type": "string",
-            "description": "Supporting data, examples, and context."
-          },
-          "tldr": { "type": "string", "maxLength": 200 },
-          "links": {
+          "tldr": { "$ref": "#/$defs/clean", "minLength": 40, "maxLength": 200 },
+          "authorities": {
             "type": "array",
+            "description": "REQUIRED, and the whole reason layer 3 exists. Named agencies, form numbers, statutes, deadlines, or fees. A section with no verifiable specific is not citable and should be cut.",
+            "minItems": 1,
             "items": {
               "type": "object",
-              "required": ["href", "label"],
+              "required": ["kind", "name"],
+              "additionalProperties": false,
               "properties": {
-                "href": { "type": "string" },
-                "label": { "type": "string" }
+                "kind": { "enum": ["agency", "form", "statute", "criterion", "deadline", "fee", "dataset"] },
+                "name": { "$ref": "#/$defs/clean", "maxLength": 120, "description": "For example 'USCIS Form I-129' or 'Delaware Division of Corporations'." },
+                "detail": { "$ref": "#/$defs/clean", "maxLength": 240 },
+                "href": { "type": "string" }
               }
             }
           }
         }
       }
+    },
+
+    "faq_schema_items": {
+      "type": "array",
+      "description": "Emitted as FAQPage JSON-LD. Engines quote these verbatim.",
+      "minItems": 3,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["question", "answer"],
+        "additionalProperties": false,
+        "properties": {
+          "question": { "$ref": "#/$defs/question" },
+          "answer": { "$ref": "#/$defs/clean", "minLength": 120, "maxLength": 600, "description": "Direct two sentence plain English answer." }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "clean": {
+      "type": "string",
+      "allOf": [
+        { "type": "string", "pattern": "^[^\u2014\u2013]*$", "$comment": "No em or en dashes." },
+        { "type": "string", "pattern": "^(?!.*([Uu]nlock|[Ss]ynerg|[Ff]uture-proof|[Ss]eamless|[Rr]obust|[Dd]elve|[Gg]ame-chang|[Ll]everag|[Ee]levate|[Hh]arness|[Hh]euristic|[Pp]aradigm|[Mm]yriad|[Ii]n today's))", "$comment": "Buzzword and academic-register ban." },
+        { "type": "string", "pattern": "^(?!.*\\bfederal\\b)", "$comment": "Federal must always be capitalized." },
+        { "type": "string", "pattern": "^(?!.*\\bstate (law|laws|agency|agencies|level|tax|taxes|filing|filings|requirement|requirements|regulation|regulations|registration|income))", "$comment": "State must be capitalized when used as the government adjective. The verb 'to state' is left alone deliberately." }
+      ]
+    },
+    "question": {
+      "allOf": [
+        { "$ref": "#/$defs/clean" },
+        { "type": "string", "pattern": "\\?\\s*$", "$comment": "Must end in a question mark." }
+      ],
+      "maxLength": 110
     }
   }
 }
